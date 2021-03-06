@@ -3,6 +3,60 @@ const mysql2 = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const fs = require('fs');
+const db = express();
+
+require('dotenv').config();
+
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    // Your MySQL username
+    user: 'root',
+    // Your MySQL password
+    password: '',
+    database: 'employee_db'
+});
+
+connection.connect(err => {
+	if (err) throw err;
+	inquirer.prompt([
+		{
+			type: 'list',
+			message: 'What would you like to do?',
+			name: 'You_choosen',
+            choices: [
+                'View All Employees',
+                'View All Departments',
+                'View All Roles',
+                'Search for Employee',
+                'Search for Employee by Manager',
+                'Remove Employee',
+                'Remove Department'
+
+            ]
+		},
+		{
+			type: 'input',
+			message: 'What ?',
+			name: ''
+		}
+	]).then(data => {
+		console.log(data);
+		// save to db
+		const query = connection.query(
+			'INSERT INTO users SET ?',
+			[ data ],
+			(err, res) => {
+				if (err) throw err;
+				console.log('Done!');
+				connection.end();
+			}
+		);
+		console.log(query.sql);
+	}).catch(err => {if (err)throw err});
+});
+
 
 // GIVEN a command-line application that accepts user input
 // WHEN I start the application
@@ -23,7 +77,8 @@ const fs = require('fs');
 // THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 
 
-// ------------------------------------------ Variables ------------------------------------------- //
-let teamArr = [];
+// ------------------------------------------  ------------------------------------------- //
+
+
 
 
