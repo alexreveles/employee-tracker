@@ -32,7 +32,7 @@
 ### https://github.com/alexreveles
 
 
-![](./assets/images/pic1.png)
-![](./assets/images/pic2.png)
+![](./assets/pic1.png)
+![](./assets/pic2.png)
 
 
