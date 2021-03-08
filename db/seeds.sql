@@ -15,7 +15,7 @@ VALUES
 ('Marketing Manager', 25000, 2),
 ('Intern Marketing', 8000, 2),
 ('Sales Manager', 45000, 3),
-('Sales Specialist', 35000, 3),
+('Sales Manager', 35000, 3),
 ('Intern Sales', 12000, 3),
 ('Manager Janitor', 13000, 4),
 ('Janitor', 7000, 4);
