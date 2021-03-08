@@ -127,46 +127,115 @@ connection.query(`SELECT role.title, role.salary, role.id, department.name AS de
 })
 };
 
-// ------------------------------------------ Function to View All Employees By Department ------------------------------------------- //
-// employee including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-const displayEmByDep = () => {
-connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title FROM role LEFT JOIN department on role.department_id = department.id;`)	
 
 
-};
-
-// ------------------------------------------ Function to View All Employees By Manager ------------------------------------------- //
-const displayEmByManage = () => {
-connection.query(`SELECT ;`, 
-(err, data) => {
-	if (err) throw err;
-	console.table(data);
-	init();
-})	
-};
 
 // ------------------------------------------ Function to Add Employee ------------------------------------------- //
+	const addEmployee = () => {
+	connection.query(`SELECT employee.first_name, employee.last_name, role.id, CONCAT(manager.first_name, '', manager.last_name) manager ;`, 
+	(err, data) => {
+		if (err) throw err;
+		console.table(data);
+		init();
+	})	
+	};
 
-
-// ------------------------------------------ Function to Remove Employee ------------------------------------------- //
 
 
 // ------------------------------------------ Function to Update Employee Role ------------------------------------------- //
-
+	const updateEmpRole = () => {
+	connection.query(`SELECT ;`, 
+	(err, data) => {
+		if (err) throw err;
+		console.table(data);
+		init();
+	})	
+	};
 
 // ------------------------------------------ Function to Add Employee Role ------------------------------------------- //
-
-// ------------------------------------------ Function to Remove Role  ------------------------------------------- //
-
+	const AddRole = () => {
+	connection.query(`SELECT ;`, 
+	(err, data) => {
+		if (err) throw err;
+		console.table(data);
+		init();
+	})	
+	};
 
 // ------------------------------------------ Function to Add New Department ------------------------------------------- //
+	const addDepartment = () => {
+	connection.query(`SELECT ;`, 
+	(err, data) => {
+		if (err) throw err;
+		console.table(data);
+		init();
+	})	
+	};
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ------------------------------------------ (Extra Credit) Function to View All Employees By Department ------------------------------------------- //
+	// employee including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
+	// const displayEmByDep = () => {
+	// connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title FROM role LEFT JOIN department on role.department_id = department.id;`,
+	// (err, data) => {
+	// 	if (err) throw err;
+	// 	console.table(data);
+	// 	init();
+	// })	
 
 
-// ------------------------------------------ Function to Remove Department ------------------------------------------- //
+// };
 
+// ------------------------------------------  (Extra Credit) Function to View All Employees By Manager ------------------------------------------- //
+	// const displayEmByManager = () => {
+	// connection.query(`SELECT ;`, 
+	// (err, data) => {
+	// 	if (err) throw err;
+	// 	console.table(data);
+	// 	init();
+	// })	
+	// };
 
-// ------------------------------------------ Function to Update Employee Manager ------------------------------------------- //
+// ------------------------------------------ (Extra Credit) Function to Remove Employee ------------------------------------------- //
+	// const removeEmployee = () => {
+	// connection.query(`SELECT ;`, 
+	// (err, data) => {
+	// 	if (err) throw err;
+	// 	console.table(data);
+	// 	init();
+	// })	
+	// };
 
+// ------------------------------------------  (Extra Credit) Function to Remove Department ------------------------------------------- //
+	// const removeDept = () => {
+	// connection.query(`SELECT ;`, 
+	// (err, data) => {
+	// 	if (err) throw err;
+	// 	console.table(data);
+	// 	init();
+	// })	
+	// };
+
+// ------------------------------------------ (Extra Credit) Function to Remove Role  ------------------------------------------- //
+
+	// const removeRole = () => {
+	// connection.query(`SELECT ;`, 
+	// (err, data) => {
+	// 	if (err) throw err;
+	// 	console.table(data);
+	// 	init();
+	// })	
+	// };
+
+// ------------------------------------------ (Extra Credit) Function to Update Employee Manager ------------------------------------------- //
+	// const updateEmpManager = () => {
+	// connection.query(`SELECT ;`, 
+	// (err, data) => {
+	// 	if (err) throw err;
+	// 	console.table(data);
+	// 	init();
+	// })	
+	// };
 
 // GIVEN a command-line application that accepts user input
 // WHEN I start the application
