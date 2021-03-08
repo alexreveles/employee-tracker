@@ -1,11 +1,11 @@
 // ------------------------------------------ Dependencies ------------------------------------------- //
-const mysql2 = require('mysql2');
+const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const fs = require('fs');
-const db = express();
 
-require('dotenv').config();
+// const { response } = require("express");
+// require('dotenv').config();
 
 
 const connection = mysql.createConnection({
@@ -18,44 +18,154 @@ const connection = mysql.createConnection({
     database: 'employee_db'
 });
 
-connection.connect(err => {
+connection.connect(function (err) {
 	if (err) throw err;
-	inquirer.prompt([
-		{
-			type: 'list',
-			message: 'What would you like to do?',
-			name: 'You_choosen',
-            choices: [
-                'View All Employees',
-                'View All Departments',
-                'View All Roles',
-                'Search for Employee',
-                'Search for Employee by Manager',
-                'Remove Employee',
-                'Remove Department'
+	console.log("Connected as id " + connection.threadId);
+	init();
+  });
 
-            ]
-		},
-		{
-			type: 'input',
-			message: 'What ?',
-			name: ''
+// ------------------------------------------ function to initialize application  ------------------------------------------- //
+
+function init() {
+	inquirer.prompt({
+		type: "list",
+		name: "start",
+		message: "What would you like to do?",
+		choices: ["View All Employees", "View All Departments", "View All Roles", "View All Employees By Department", "View All Employees By Manager", "Add Employee", "Remove Employee", "Update Employee Role", "Add Employee Role", "Remove Role", "Add New Department", "Remove Department", "Update Employee Manager"]
+	})
+	.then(function(response) {
+		switch (response.start) {
+
+			case "View All Employees":
+				displayEmployees();
+				break;
+			
+			case "View All Departments":
+				viewDepartments();
+				break;
+
+			case "View All Roles":
+				viewRoles();
+				break;
+
+			case "View All Employees By Department":
+				displayEmByDep();
+				break;	
+
+			case "View All Employees By Manager":
+				displayEmByManager();
+				break;
+				
+			case "Add Employee":
+				addEmployee();
+				break;
+
+			case "Remove Employee":
+				removeEmployee();
+				break;
+				
+			case "Update Employee Role":
+				updateEmpRole();
+				break;
+				
+			case "Add Employee Role":
+				AddRole();
+				break;
+				
+			case "Remove Role":
+				removeRole();
+				break;
+				
+			case "Add New Department":
+				addDepartment();
+				break;
+				
+			case "Remove Department":
+				removeDept();
+				break;
+				
+			case "Update Employee Manager":
+				updateEmpManager();
+				break;	
+
 		}
-	]).then(data => {
-		console.log(data);
-		// save to db
-		const query = connection.query(
-			'INSERT INTO users SET ?',
-			[ data ],
-			(err, res) => {
-				if (err) throw err;
-				console.log('Done!');
-				connection.end();
-			}
-		);
-		console.log(query.sql);
-	}).catch(err => {if (err)throw err});
-});
+	})
+};
+
+
+// ------------------------------------------ Function to display all employees By first_name, last_name, role_id, manager_id  ------------------------------------------- //
+
+const displayEmployees = () => {
+connection.query(` SELECT employee.first_name, employee.last_name, role.title, CONCAT(manager.first_name, '', manager.last_name) manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN employee manager ON manager.id = employee.manager_id;`,
+( err, data) => {
+	if (err) throw err;
+	console.table(data);
+	init();
+})
+};
+
+// ------------------------------------------ Function to display all departments By name  ------------------------------------------- //
+
+const viewDepartments = () => {
+connection.query(`SELECT department.name, department.id FROM department;`, 
+(err, data) => {
+	if (err) throw err;
+	console.table(data);
+	init();
+})
+};
+
+
+// ------------------------------------------ Function to display all roles By title, salary, department_id  ------------------------------------------- //
+
+const viewRoles = () => { 
+connection.query(`SELECT role.title, role.salary, role.id, department.name AS department FROM role LEFT JOIN department on role.department_id = department.id;`,
+(err, data) => {
+	if (err) throw err;
+	console.table(data);
+	init();
+})
+};
+
+// ------------------------------------------ Function to View All Employees By Department ------------------------------------------- //
+// employee including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
+const displayEmByDep = () => {
+connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title FROM role LEFT JOIN department on role.department_id = department.id;`)	
+
+
+};
+
+// ------------------------------------------ Function to View All Employees By Manager ------------------------------------------- //
+const displayEmByManage = () => {
+connection.query(`SELECT ;`, 
+(err, data) => {
+	if (err) throw err;
+	console.table(data);
+	init();
+})	
+};
+
+// ------------------------------------------ Function to Add Employee ------------------------------------------- //
+
+
+// ------------------------------------------ Function to Remove Employee ------------------------------------------- //
+
+
+// ------------------------------------------ Function to Update Employee Role ------------------------------------------- //
+
+
+// ------------------------------------------ Function to Add Employee Role ------------------------------------------- //
+
+// ------------------------------------------ Function to Remove Role  ------------------------------------------- //
+
+
+// ------------------------------------------ Function to Add New Department ------------------------------------------- //
+
+
+// ------------------------------------------ Function to Remove Department ------------------------------------------- //
+
+
+// ------------------------------------------ Function to Update Employee Manager ------------------------------------------- //
 
 
 // GIVEN a command-line application that accepts user input
